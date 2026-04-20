@@ -1,20 +1,21 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin Feedback List</title>
+    <title><spring:message code="admin.title"/></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="${pageContext.request.contextPath}/feedback">Feedback App</a>
+        <a class="navbar-brand" href="${pageContext.request.contextPath}/feedback"><spring:message code="app.name"/></a>
         <div class="navbar-nav">
-            <a class="nav-link" href="${pageContext.request.contextPath}/feedback">Submit Feedback</a>
-            <a class="nav-link active" href="${pageContext.request.contextPath}/admin/feedbacks">Admin List</a>
+            <a class="nav-link" href="${pageContext.request.contextPath}/feedback"><spring:message code="nav.submitFeedback"/></a>
+            <a class="nav-link active" href="${pageContext.request.contextPath}/admin/feedbacks"><spring:message code="nav.adminList"/></a>
         </div>
     </div>
 </nav>
@@ -22,31 +23,24 @@
 <main class="container py-5">
     <div class="d-flex justify-content-between align-items-start mb-4">
         <div>
-            <h1 class="h3 mb-1">Feedback entries</h1>
+            <h1 class="h3 mb-1"><spring:message code="admin.heading"/></h1>
         </div>
-        <a class="btn btn-primary" href="${pageContext.request.contextPath}/feedback">New feedback</a>
+        <a class="btn btn-primary" href="${pageContext.request.contextPath}/feedback"><spring:message code="admin.newFeedback"/></a>
     </div>
 
     <form class="row g-3 align-items-end bg-white border rounded p-3 mb-4 shadow-sm" method="get" action="${pageContext.request.contextPath}/admin/feedbacks">
         <input type="hidden" name="sort" value="${sort}">
         <div class="col-md-4">
-            <label for="contactType" class="form-label">Filter by contact type</label>
+            <label for="contactType" class="form-label"><spring:message code="admin.filter.contactType"/></label>
             <select id="contactType" name="contactType" class="form-select" onchange="this.form.submit()">
-                <option value="">All contact types</option>
+                <option value=""><spring:message code="admin.filter.allContactTypes"/></option>
                 <c:forEach items="${contactTypes}" var="type">
                     <option value="${type.displayName}" ${selectedContactType == type ? 'selected' : ''}>${type.displayName}</option>
                 </c:forEach>
             </select>
         </div>
-<%--        <div class="col-md-3">--%>
-<%--            <label for="direction" class="form-label">Sort direction</label>--%>
-<%--            <select id="direction" name="direction" class="form-select" onchange="this.form.submit()">--%>
-<%--                <option value="desc" ${direction == 'desc' ? 'selected' : ''}>Newest first</option>--%>
-<%--                <option value="asc" ${direction == 'asc' ? 'selected' : ''}>Oldest first</option>--%>
-<%--            </select>--%>
-<%--        </div>--%>
         <div class="col-md-5 d-flex gap-2">
-            <a class="btn btn-outline-secondary" href="${pageContext.request.contextPath}/admin/feedbacks">Reset</a>
+            <a class="btn btn-outline-secondary" href="${pageContext.request.contextPath}/admin/feedbacks"><spring:message code="admin.reset"/></a>
         </div>
     </form>
 
@@ -65,7 +59,7 @@
                             </c:if>
                         </c:url>
                         <a class="text-white text-decoration-none" href="${idSortUrl}">
-                            ID
+                            <spring:message code="admin.header.id"/>
                             <c:if test="${sort == 'id'}"><span class="small">(${direction})</span></c:if>
                         </a>
                     </th>
@@ -79,8 +73,12 @@
                             </c:if>
                         </c:url>
                         <a class="text-white text-decoration-none" href="${submittedAtSortUrl}">
-                            Date of submission
-                            <c:if test="${sort == 'submittedAt'}"><span class="small">(${direction == 'desc' ? 'newest' : 'oldest'})</span></c:if>
+                            <spring:message code="admin.header.submittedAt"/>
+                            <c:if test="${sort == 'submittedAt'}">
+                                <span class="small">
+                                    (<c:choose><c:when test="${direction == 'desc'}"><spring:message code="admin.sort.newest"/></c:when><c:otherwise><spring:message code="admin.sort.oldest"/></c:otherwise></c:choose>)
+                                </span>
+                            </c:if>
                         </a>
                     </th>
                     <th>
@@ -93,7 +91,7 @@
                             </c:if>
                         </c:url>
                         <a class="text-white text-decoration-none" href="${nameSortUrl}">
-                            Name
+                            <spring:message code="admin.header.name"/>
                             <c:if test="${sort == 'name'}"><span class="small">(${direction})</span></c:if>
                         </a>
                     </th>
@@ -107,7 +105,7 @@
                             </c:if>
                         </c:url>
                         <a class="text-white text-decoration-none" href="${emailSortUrl}">
-                            Email address
+                            <spring:message code="admin.header.email"/>
                             <c:if test="${sort == 'email'}"><span class="small">(${direction})</span></c:if>
                         </a>
                     </th>
@@ -121,7 +119,7 @@
                             </c:if>
                         </c:url>
                         <a class="text-white text-decoration-none" href="${contactTypeSortUrl}">
-                            Contact type
+                            <spring:message code="admin.header.contactType"/>
                             <c:if test="${sort == 'contactType'}"><span class="small">(${direction})</span></c:if>
                         </a>
                     </th>
@@ -135,7 +133,7 @@
                             </c:if>
                         </c:url>
                         <a class="text-white text-decoration-none" href="${messageSortUrl}">
-                            Message
+                            <spring:message code="admin.header.message"/>
                             <c:if test="${sort == 'message'}"><span class="small">(${direction})</span></c:if>
                         </a>
                     </th>
@@ -157,7 +155,7 @@
                     </c:when>
                     <c:otherwise>
                         <tr>
-                            <td colspan="6" class="text-center py-4 text-muted">No feedback entries found.</td>
+                            <td colspan="6" class="text-center py-4 text-muted"><spring:message code="admin.empty"/></td>
                         </tr>
                     </c:otherwise>
                 </c:choose>
@@ -179,7 +177,7 @@
                             <c:param name="contactType" value="${selectedContactType.displayName}"/>
                         </c:if>
                     </c:url>
-                    <a class="page-link" href="${previousUrl}">Previous</a>
+                    <a class="page-link" href="${previousUrl}"><spring:message code="admin.pagination.previous"/></a>
                 </li>
 
                 <c:forEach begin="0" end="${feedbackPage.totalPages - 1}" var="pageNumber">
@@ -206,15 +204,15 @@
                             <c:param name="contactType" value="${selectedContactType.displayName}"/>
                         </c:if>
                     </c:url>
-                    <a class="page-link" href="${nextUrl}">Next</a>
+                    <a class="page-link" href="${nextUrl}"><spring:message code="admin.pagination.next"/></a>
                 </li>
             </ul>
         </nav>
     </c:if>
 
     <p class="text-center text-muted mt-3">
-        Showing page ${feedbackPage.number + 1} of ${feedbackPage.totalPages == 0 ? 1 : feedbackPage.totalPages},
-        ${feedbackPage.totalElements} total entries.
+        <spring:message code="admin.pagination.summary"
+                        arguments="${feedbackPage.number + 1},${feedbackPage.totalPages == 0 ? 1 : feedbackPage.totalPages},${feedbackPage.totalElements}"/>
     </p>
 </main>
 

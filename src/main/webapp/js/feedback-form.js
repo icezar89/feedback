@@ -10,7 +10,7 @@ $(function () {
         var emailInput = $('#email')[0];
         if (emailInput.value && !emailInput.checkValidity()) {
             event.preventDefault();
-            toastr.error('Email is not a valid email address.');
+            toastr.error($('body').attr('data-email-invalid-message'));
         }
     });
 
