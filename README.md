@@ -54,8 +54,6 @@ H2 console settings:
 - **Switch to another database**
 
 ### Medium-term
-- **Input sanitisation** – Validate email format server-side and sanitise text fields
-  to prevent XSS before any frontend-facing deployment.
 - **Pagination controls in the admin view** – The backend already supports `Pageable`,
   but the UI does not yet expose page navigation controls, implement a library with pagination
   control.
